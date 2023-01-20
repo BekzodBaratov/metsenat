@@ -6,6 +6,7 @@ export const admin = defineStore("admin", {
     admin: false,
     sponsors: [],
     isAuthenticated: false,
+    mainSearch: "",
   }),
   actions: {
     authUser() {

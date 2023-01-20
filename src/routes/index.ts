@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 import Login from "../view/LoginView.vue";
-import HomeView from "../view/main/SponsorsView.vue";
+import HomeView from "../view/HomeView.vue";
 import MainView from "../view/main/MainView.vue";
 import DashboardView from "../view/main/DashboardView.vue";
 import SponsorsView from "../view/main/SponsorsView.vue";
@@ -27,19 +27,19 @@ const routes = [
     name: "mainView",
     meta: { isAuth: false },
     component: MainView,
-    redirect: "/main/dashboard",
+    redirect: "/main/sponsors",
     children: [
-      {
-        path: "sponsors",
-        component: SponsorsView,
-        name: "sponsors-list",
-        meta: { requiresAuth: true },
-      },
       {
         path: "dashboard",
         component: DashboardView,
         name: "dashboard-list",
         meta: { requiresAuth: true, title: "DashboardMain" },
+      },
+      {
+        path: "sponsors",
+        component: SponsorsView,
+        name: "sponsors-list",
+        meta: { requiresAuth: true },
       },
       {
         path: "students",

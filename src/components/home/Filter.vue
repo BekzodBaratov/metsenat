@@ -2,16 +2,17 @@
   <div class="filter bg-white border-t py-3">
     <div class="container mx-auto flex justify-between items-center">
       <div class="flex border border-blue-300 divide-x divide-blue-300 rounded-md">
-        <div
+        <RouterLink
           v-for="sel in filter.select"
           :key="sel.id"
-          @click="() => handleSelect(sel.id)"
-          :class="sel.active ? 'active-filter' : ''"
+          :to="sel.link"
+          :class="currPath === sel.link ? 'active-filter' : ''"
           class="py-2 w-40 text-center cursor-pointer"
         >
           {{ sel.title }}
-        </div>
+        </RouterLink>
       </div>
+
       <div class="flex gap-3">
         <div class="bg-gray-200 flex p-1 rounded-md px-2 gap-1">
           <img src="../../assets/filter/search_1.svg" alt="" />
@@ -42,35 +43,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { admin } from "../../store/index.js";
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { sponsorsStore } from "../../store/SponsorStore";
+import { admin } from "../../store/index";
 import FilterVue from "../modal/SponsorsFilter.vue";
-const ad = admin();
+import { filterSelect } from "../../types/MainFilter";
 
-interface filterSelect {
-  id: number;
-  title: string;
-  active: boolean;
-}
+const sponsore = sponsorsStore();
+const ad = admin();
+const route = useRoute();
+const currPath = ref<string>("/main/sponsors");
 
 const filter = ref({
   select: [
-    { id: 1, title: "dashboard", active: false },
-    { id: 2, title: "homiylar", active: true },
-    { id: 3, title: "talabalar", active: false },
+    { id: 1, title: "dashboard", link: "/main/dashboard" },
+    { id: 2, title: "homiylar", link: "/main/sponsors" },
+    { id: 3, title: "talabalar", link: "/main/students" },
   ] as filterSelect[],
   search: "" as string,
 });
 
-const handleSelect = (id: number) => {
-  for (let i = 0; i < filter.value.select.length; i++) {
-    if (filter.value.select[i].id === id) {
-      filter.value.select[i].active = true;
-    } else {
-      filter.value.select[i].active = false;
-    }
+watch(
+  () => filter.value.search,
+  () => {
+    ad.mainSearch = filter.value.search;
   }
-};
+);
+
+watch(
+  () => route.path,
+  function () {
+    currPath.value = route.path;
+  }
+);
 </script>
 
 <style scoped>
