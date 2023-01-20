@@ -14,7 +14,7 @@
       </div>
       <div class="flex gap-3">
         <div class="bg-gray-200 flex p-1 rounded-md px-2 gap-1">
-          <img src="../../assets/filter/search 1.svg" alt="" />
+          <img src="../../assets/filter/search_1.svg" alt="" />
           <input
             class="bg-transparent outline-none text-gray-600"
             type="search"
@@ -29,7 +29,7 @@
           class="flex justify-center cursor-pointer items-center bg-blue-100 px-6 rounded-md text-blueCustom"
         >
           <div>
-            <img src="../../assets/filter/filter 1.svg" alt="" />
+            <img src="../../assets/filter/filter_1.svg" alt="" />
           </div>
           <p>Filter</p>
         </div>

@@ -36,7 +36,7 @@
             {{ item.get_status_display }}
           </td>
           <td class="py-6 bg-white flex justify-center rounded-r-md">
-            <img src="../../assets/filter/eye 1.svg" alt="view" />
+            <img src="../../assets/filter/eye_1.svg" alt="view" />
           </td>
         </tr>
       </tbody>

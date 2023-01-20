@@ -14,11 +14,11 @@
         <div class="bg-gray-100 flex gap-5 items-center justify-between p-1 pl-4 rounded-md">
           <p>Shoxrux</p>
           <div class="bg-greenCustom px-1 pt-2 rounded-md">
-            <img class="h-4" src="../../assets/header/icons8-user.8 1.svg" alt="" />
+            <img class="h-4" src="../../assets/header/icons8-user.8_1.svg" alt="" />
           </div>
         </div>
         <div class="p-2">
-          <img class="h-7" src="../../assets/header/log-out 1.svg" alt="" />
+          <img class="h-7" src="../../assets/header/log-out_1.svg" alt="" />
         </div>
       </div>
     </div>
