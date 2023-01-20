@@ -5,12 +5,28 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Metsenat</title>
+    <style>
+      [v-cloak] > * {
+        display: none;
+      }
+
+      #loading {
+        display: none;
+        width: fit-content;
+        margin: 0 auto;
+        padding: 20% 0;
+      }
+
+      [v-cloak] + #loading {
+        display: block;
+      }
+    </style>
   </head>
   <body>
     <div id="modal"></div>
     <div id="app" v-cloak></div>
     <div id="loading">
-      <img src="./src/assets/images/website/loading.gif" alt="Loading..." />
+      <img src="./src/assets/login/loading.gif" alt="Loading..." />
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

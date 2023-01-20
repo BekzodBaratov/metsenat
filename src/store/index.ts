@@ -7,7 +7,7 @@ export const admin = defineStore("admin", {
     sponsors: [],
     isAuthenticated: false,
   }),
-  action: {
+  actions: {
     authUser() {
       if (localStorage.getItem("isAuthenticated")) {
         console.log(true);
@@ -15,7 +15,7 @@ export const admin = defineStore("admin", {
         console.log(false);
       }
     },
-    changeUserAuth(state) {
+    changeUserAuth(state: boolean) {
       this.isAuthenticated = state;
     },
     Init() {

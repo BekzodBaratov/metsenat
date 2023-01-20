@@ -28,21 +28,6 @@ body {
   border-radius: 10px;
 }
 
-[v-cloak] > * {
-  display: none;
-}
-
-#loading {
-  display: none;
-  width: fit-content;
-  margin: 0 auto;
-  padding: 20% 0;
-}
-
-[v-cloak] + #loading {
-  display: block;
-}
-
 .md-text {
   @apply text-2xl font-semibold;
 }

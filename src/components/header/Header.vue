@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-white py-2">
+  <header v-if="$route.path !== '/login'" class="bg-white py-2">
     <div class="container mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2">
         <div class="h-10">

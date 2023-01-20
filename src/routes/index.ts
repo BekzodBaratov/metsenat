@@ -1,22 +1,53 @@
 import { createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 import Login from "../view/LoginView.vue";
-import Home from "../view/SponsorsView.vue";
+import HomeView from "../view/main/SponsorsView.vue";
+import MainView from "../view/main/MainView.vue";
+import DashboardView from "../view/main/DashboardView.vue";
+import SponsorsView from "../view/main/SponsorsView.vue";
+import StudentView from "../view/main/StudentView.vue";
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    meta: { isAuth: false },
-    component: Home,
+    name: "WelcomeView",
+    component: HomeView,
+    meta: {
+      requiresAuth: false,
+    },
   },
   {
     path: "/login",
     name: "login",
     beforeEnter: hideForAuth,
-    meta: {
-      requiresGuest: true,
-    },
+    meta: { requiresGuest: true },
     component: Login,
+  },
+  {
+    path: "/main",
+    name: "mainView",
+    meta: { isAuth: false },
+    component: MainView,
+    redirect: "/main/dashboard",
+    children: [
+      {
+        path: "sponsors",
+        component: SponsorsView,
+        name: "sponsors-list",
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "dashboard",
+        component: DashboardView,
+        name: "dashboard-list",
+        meta: { requiresAuth: true, title: "DashboardMain" },
+      },
+      {
+        path: "students",
+        component: StudentView,
+        name: "students-list",
+        meta: { requiresAuth: true },
+      },
+    ],
   },
 ];
 

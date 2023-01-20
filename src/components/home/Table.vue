@@ -1,26 +1,29 @@
 <template>
   <div v-if="sponsors.results.length" class="container mx-auto py-6">
-    <table class="w-full table-auto border-spacing-y-8 text-sm">
+    <table
+      class="table w-full table-auto border-spacing-y-4 border-separate text-sm responsive-table"
+      classes="responsive-table"
+    >
       <thead class="uppercase">
-        <tr>
-          <th class="text-start pb-2 text-gray-600 font-normal">#</th>
-          <th class="text-start pb-2 text-gray-600 font-normal">F.I.SH</th>
-          <th class="text-start pb-2 text-gray-600 font-normal">Tel.Raqami</th>
-          <th class="text-start pb-2 text-gray-600 font-normal">Homiylik summasi</th>
-          <th class="text-start pb-2 text-gray-600 font-normal">Sarflangan summa</th>
-          <th class="text-start pb-2 text-gray-600 font-normal">Sana</th>
-          <th class="text-start pb-2 text-gray-600 font-normal">Holati</th>
-          <th class="pb-2 text-gray-600 font-normal">Amallar</th>
+        <tr class="text-xs text-[#B1B1B8] uppercase text-center font-semibold">
+          <th class="text-center text-salate-700">#</th>
+          <th class="text-start text-salate-700">F.I.SH</th>
+          <th class="text-center text-salate-700">Tel.Raqami</th>
+          <th class="text-center text-salate-700">Homiylik summasi</th>
+          <th class="text-center text-salate-700">Sarflangan summa</th>
+          <th class="text-center text-salate-700">Sana</th>
+          <th class="text-center text-salate-700">Holati</th>
+          <th class="text-center text-salate-700">Amallar</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="(item, index) in sponsors.results" :key="item.id" class="bg-white">
-          <td class="pl-2 py-2">{{ index + 1 }}</td>
-          <td class="py-2">{{ item.full_name }}</td>
-          <td class="py-2">{{ item.phone }}</td>
-          <td class="py-2">{{ item.sum }}</td>
-          <td class="py-2">{{ item.spent }}</td>
-          <td class="py-2">{{ item.created_at }}</td>
+      <tbody class="space">
+        <tr v-for="(item, index) in sponsors.results" :key="item.id" class="">
+          <td class="pl-2 py-6 text-center bg-white rounded-l-md">{{ index + 1 }}</td>
+          <td class="py-6 bg-white">{{ item.full_name }}</td>
+          <td class="py-6 bg-white text-center">{{ item.phone }}</td>
+          <td class="py-6 bg-white text-center font-medium text-slate-700">{{ numberWithSpaces(item.sum) }}SUM</td>
+          <td class="py-6 bg-white text-center font-medium text-slate-700">{{ numberWithSpaces(item.spent) }}SUM</td>
+          <td class="py-6 bg-white text-center front-medium text-slate-700">{{ formatDateTime(item.created_at) }}</td>
           <td
             :class="{
               'text-blueCustom': item.get_status_display === 'Yangi',
@@ -28,11 +31,11 @@
               'text-greenCustom': item.get_status_display === 'Tasdiqlangan',
               'text-gray-500': item.get_status_display === 'Bekor qilingan',
             }"
-            class="py-2"
+            class="py-6 bg-white text-center"
           >
             {{ item.get_status_display }}
           </td>
-          <td class="py-2">
+          <td class="py-6 bg-white flex justify-center rounded-r-md">
             <img src="../../assets/filter/eye 1.svg" alt="view" />
           </td>
         </tr>
@@ -40,13 +43,22 @@
     </table>
     <div class="flex justify-between items-center mt-3">
       <p>
-        {{ sponsors.count }} tadan {{ pageStart + 1 }}-{{ pageEnd }}
+        {{ sponsors.count }} tadan {{ (currPage - 1) * pageSizeRes + 1 }}-{{ currPage * pageSizeRes }}
         ko'rsatilmoqda
       </p>
       <div class="flex gap-8 items-center">
         <div class="select space-x-1 rounded-md p-1">
           <span>Korsatish</span>
-          <select v-model="pageSize" class="p-1 rounded-md" name="ko'rsatish">
+          <select
+            v-model="pageSize"
+            @change="
+              () => {
+                hanldeSelect();
+              }
+            "
+            class="p-1 rounded-md"
+            name="ko'rsatish"
+          >
             <option value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option>
@@ -60,13 +72,15 @@
         <div class="pagination space-x-2">
           <span
             :disabled="sponsors.previous == null"
-            @click="() => handlePrev(sponsors.previous, pageSize)"
+            :class="sponsors.previous == null ? 'opacity-75 cursor-not-allowed' : ''"
+            @click="() => handlePrev(pageSize)"
             class="bg-white py-1 px-3 rounded-md cursor-pointer"
             >Prev</span
           >
           <span
-            @click="() => handleNext(sponsors.next, pageSize)"
+            @click="() => handleNext(pageSize)"
             :disabled="sponsors.next == null"
+            :class="sponsors.next == null ? 'opacity-75 cursor-not-allowed' : ''"
             class="bg-white py-1 px-3 rounded-md cursor-pointer"
             >Next</span
           >
@@ -79,27 +93,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import axios from "axios";
+import { Sponsors } from "../../types/Table";
+import { numberWithSpaces } from "../../helpers/Numbers";
+import { formatDateTime } from "../../helpers/DateTime";
 
-const pageSize = ref<number>(10);
-const pageStart = ref<number>(0);
-const pageEnd = ref<number>(10);
-const oldEndPage = ref<number[]>([10]);
+const pageSize = ref<number>(15);
+const pageSizeRes = ref<number>(15);
+const currPage = ref<number>(1);
 
-interface Table {
-  id: number;
-  full_name: string;
-  phone: string;
-  sum: number;
-  spent: number;
-  created_at: string;
-  get_status_display: string;
-}
-interface Sponsors {
-  count: number;
-  next: string;
-  previous: string;
-  results: Table[];
-}
 const sponsors = ref<Sponsors>({
   count: 0,
   next: "",
@@ -107,22 +108,22 @@ const sponsors = ref<Sponsors>({
   results: [],
 });
 
-function handlePrev(data: string, pageSize: number) {
-  if (!data) return;
-  oldEndPage.value.pop();
-
-  let page = data.split("?")[1];
-  fetchApi("?" + page + "&page_size=" + pageSize);
-  pageStart.value -= +oldEndPage.value[oldEndPage.value.length - 2];
-  pageEnd.value -= +oldEndPage.value[oldEndPage.value.length - 1];
+function handlePrev(pageSize: number) {
+  if (!sponsors.value.previous) return;
+  currPage.value--;
+  fetchApi("?page=" + currPage.value + "&page_size=" + pageSize);
+  pageSizeRes.value = pageSize;
 }
-function handleNext(data: string, pageSize: number) {
-  if (!data) return;
-  oldEndPage.value.push(pageSize);
-  let page = data.split("?")[1];
-  fetchApi("?" + page + "&page_size=" + pageSize);
-  pageStart.value += +oldEndPage.value[oldEndPage.value.length - 2];
-  pageEnd.value += +oldEndPage.value[oldEndPage.value.length - 1];
+function handleNext(pageSize: number) {
+  if (!sponsors.value.next) return;
+  currPage.value++;
+  fetchApi("?page=" + currPage.value + "&page_size=" + pageSize);
+  pageSizeRes.value = pageSize;
+}
+function hanldeSelect() {
+  if (pageSize.value * currPage.value > sponsors.value.count) return;
+  fetchApi("?page=" + currPage.value + "&page_size=" + pageSize.value);
+  pageSizeRes.value = pageSize.value;
 }
 
 function fetchApi(data: string = "") {
@@ -131,26 +132,11 @@ function fetchApi(data: string = "") {
     .then(function (response) {
       console.log(response.data);
 
-      sponsors.value = {
-        count: response.data.count,
-        next: response.data.next,
-        previous: response.data.previous,
-        results: [
-          {
-            id: response.data.results.id,
-            full_name: response.data.results.full_name,
-            phone: response.data.results.phone,
-            sum: response.data.results.sum,
-            spent: response.data.results.spent,
-            created_at: response.data.results.created_at,
-            get_status_display: response.data.results.get_status_display,
-          },
-        ],
-      };
+      sponsors.value = response.data;
     })
     .catch(function (error) {
       console.log(error);
     });
 }
-fetchApi();
+fetchApi("?page=1&page_size=" + pageSize.value);
 </script>
