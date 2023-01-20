@@ -18,7 +18,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    beforeEnter: hideForAuth,
+    // beforeEnter: hideForAuth,
     meta: { requiresGuest: true },
     component: Login,
   },
@@ -60,12 +60,12 @@ const router = createRouter({
   routes,
 });
 
-function hideForAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
-  if (to.path === "/login" && localStorage.getItem("access_token")) {
-    next("/");
-  } else {
-    next();
-  }
-}
+// function hideForAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+//   if (to.path === "/login" && localStorage.getItem("access_token")) {
+//     next("/");
+//   } else {
+//     next();
+//   }
+// }
 
 export default router;
