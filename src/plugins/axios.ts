@@ -1,37 +1,31 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+import type { App } from "vue";
 
-axios.defaults.baseURL = "https://club.metsenat.uz/api/v1/";
+export const _BASE_CONFIG: AxiosRequestConfig = {
+  baseURL: "https://metsenatclub.xn--h28h.uz/api/v1",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
 
-export default axios;
+export const authProtectedApi: any = () =>
+  axios.create({
+    ..._BASE_CONFIG,
+    headers: {
+      ..._BASE_CONFIG.headers,
+      Authorization: `Bearer ${localStorage.getItem("access")}`,
+    },
+  });
 
-////////////////////////////////////
-// import axios, { AxiosRequestConfig } from "axios";
+export const publicApi = axios.create({ ..._BASE_CONFIG });
 
-// export const _BASE_CONFIG: AxiosRequestConfig = {
-//   baseURL: "https://club.metsenat.uz/api/v1/",
-//   headers: {
-//     "Content-Type": "application / json",
-//   },
-// };
-
-// export const authProtectedApi: any = () =>
-//   axios.create({
-//     ..._BASE_CONFIG,
-//     headers: {
-//       ..._BASE_CONFIG.headers,
-//       Authorization: `Bearer ${localStorage.getItem("access")}`,
-//     },
-//   });
-
-// export const publicApi = axios.create({ ..._BASE_CONFIG });
-
-// export async function fetchData(url: string) {
-//   const request = await publicApi.get(url);
-//   try {
-//     if (request.status === 200) {
-//       return request;
-//     }
-//   } catch (error) {
-//     return error;
-//   }
-// }
+export async function fetchData(url: string) {
+  const request = await publicApi.get(url);
+  try {
+    if (request.status === 200) {
+      return request;
+    }
+  } catch (error) {
+    return error;
+  }
+}

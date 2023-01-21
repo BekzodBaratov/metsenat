@@ -102,3 +102,4 @@ const jisFormFunc = function () {
   console.log(jismoniyForm.value);
 };
 </script>
+<!-- full_name type phone institute contract given -->

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/login/Group.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Metsenat</title>
     <style>
@@ -29,5 +29,11 @@
       <img src="./src/assets/login/loading.gif" alt="Loading..." />
     </div>
     <script type="module" src="/src/main.ts"></script>
+    <script
+      src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit"
+      async
+      defer
+    ></script>
+    <script src="https://unpkg.com/vue-recaptcha@^2/dist/vue-recaptcha.min.js"></script>
   </body>
 </html>

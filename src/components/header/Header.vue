@@ -25,22 +25,28 @@
 
       <div v-if="!ad.isAuthenticated">
         <ul class="flex items-center gap-6">
-          <li class="cursor-pointer hover:text-blue-500 duration-200 py-2">Uz</li>
-          <li>
-            <RouterLink class="hover:text-blue-500 duration-200 py-2" to="/main/dashboard">Asosiy</RouterLink>
+          <li @click="toggleLanguage" class="cursor-pointer hover:text-blue-500 duration-200 py-2">
+            {{ t$.locale.value }}
           </li>
           <li>
-            <RouterLink class="cursor-pointer hover:text-blue-500 duration-200 py-2" to="/"> Grantlar </RouterLink>
+            <RouterLink class="hover:text-blue-500 duration-200 py-2" to="/main/sponsors">{{
+              t("navbar.main")
+            }}</RouterLink>
           </li>
           <li>
-            <RouterLink class="cursor-pointer hover:text-blue-500 duration-200 py-2" to="/"
-              >Soliq imtiyozlari</RouterLink
-            >
+            <RouterLink class="cursor-pointer hover:text-blue-500 duration-200 py-2" to="/">
+              {{ t("navbar.grants") }}
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink class="cursor-pointer hover:text-blue-500 duration-200 py-2" to="/">{{
+              t("navbar.duty")
+            }}</RouterLink>
           </li>
           <li>
             <RouterLink class="flex items-center gap-1 group" to="login">
               <span><img src="../../assets/header/log-out_1.svg" alt="login" /></span>
-              <span class="group-hover:text-blue-400 duration-200">Kirish</span>
+              <span class="group-hover:text-blue-400 duration-200">{{ t("navbar.login") }}</span>
             </RouterLink>
           </li>
           <li>
@@ -48,7 +54,7 @@
               to="/register"
               class="py-2 px-4 bg-gray-100 text-blue-500 rounded-md cursor-pointer text-center border border-blueCustom hover:bg-blue-200 duration-150"
             >
-              Ro'yxatdan o'tish
+              {{ t("navbar.reg") }}
             </RouterLink>
           </li>
         </ul>
@@ -59,5 +65,14 @@
 
 <script setup lang="ts">
 import { admin } from "../../store";
+import { useI18n } from "vue-i18n";
 const ad = admin();
+const { t } = useI18n();
+const t$ = useI18n();
+
+const toggleLanguage = () => {
+  if (t$.locale.value === "uz") t$.locale.value = "en";
+  else if (t$.locale.value === "en") t$.locale.value = "uz";
+  else t$.locale.value = "en";
+};
 </script>

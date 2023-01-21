@@ -1,5 +1,5 @@
 <template>
-  <form action="jismoniy">
+  <form>
     <div class="pb-6">
       <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 uppercase"
         >F.I.SH (Familya Ism Sharifingiz)</label
@@ -60,7 +60,7 @@
         id="customPay"
       />
     </div>
-    <div class="pb-6">
+    <div v-if="props.isActivePerson === 'yuridik'" class="pb-6">
       <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 uppercase">Tashkilot nomi</label>
       <input
         type="text"
@@ -84,6 +84,7 @@ import { vMaska } from "maska";
 import { telAndSumMask } from "../../plugins/vmaska";
 import { numberWithSpaces } from "../../helpers/Numbers";
 import checkIcon from "../../assets/icon/checked-icon.svg";
+import { publicApi } from "../../plugins/axios";
 
 const masks = reactive(telAndSumMask);
 
@@ -112,5 +113,46 @@ const handlePay = (id: number) => {
 
 const yurFormFunc = function () {
   console.log(yuridikForm.value);
+
+  postApi({
+    full_name: yuridikForm.value.fish,
+    phone: "+998" + yuridikForm.value.tel,
+    sum: yuridikForm.value.pay,
+    payment_type: [44],
+    firm: yuridikForm.value.tashkilot,
+    spent: 0,
+    comment: "",
+  });
 };
+
+const emit = defineEmits(["formSubmit"]);
+const props = defineProps(["isActivePerson"]);
+
+async function postApi(data: object) {
+  try {
+    const response = await publicApi.post("/sponsor-create/", data);
+
+    if (response.status === 201) {
+      emit("formSubmit", true);
+    }
+
+    yuridikForm.value = {
+      fish: "",
+      tel: "",
+      pay: 1000000,
+      tashkilot: "",
+    };
+  } catch (e) {
+    emit("formSubmit", false);
+  }
+
+  // axios
+  //   .post("/sponsor-create", data)
+  //   .then(function (response) {
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+}
 </script>

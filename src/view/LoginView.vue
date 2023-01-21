@@ -33,26 +33,10 @@
               required
             />
           </div>
-          <div class="flex items-center justify-between p-2 mb-6 border border-gray-300 rounded-md">
-            <div class="flex gap-2">
-              <div class="flex items-center h-5">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  v-model="state.checkbox"
-                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-                  required
-                />
-              </div>
-              <label for="recaptcha" class="ml-2 text-sm font-medium text-gray-900">I'm not a robot</label>
-            </div>
-            <div class="h-10">
-              <img class="h-full" src="../assets/login/reCAPTCHA.svg" alt="" />
-            </div>
-          </div>
+          <VueRecaptcha :sitekey="siteKey" :load-recaptcha-script="true" @verify="handleSuccess"></VueRecaptcha>
           <button
             type="submit"
-            @click.prevent="formLoginData"
+            @click.prevent="() => formLoginData(state)"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
           >
             Submit
@@ -65,30 +49,46 @@
 
 <script setup lang="ts">
 import { reactive, computed, ref } from "vue";
+import { VueRecaptcha } from "vue-recaptcha";
+import { useRouter } from "vue-router";
+import { admin } from "../store";
 import axios from "axios";
+const ad = admin();
+const router = useRouter();
 
-const state = reactive({
+interface State {
+  email: string;
+  password: string;
+}
+const state = reactive<State>({
   email: "",
   password: "",
-  checkbox: false,
 });
+const siteKey = "6LfHiBUkAAAAANxOMTNs6clQ9RV8M_5d4nm3Lqdp";
+const reCAPTCHA = ref<boolean>(false);
 
-const formLoginData = () => {
-  if (!state.checkbox) return;
-  axios({
-    method: "post",
-    url: "auth/login",
-    withCredentials: true,
-    data: { username: state.email, password: state.password },
-  })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
+const handleSuccess = () => {
+  reCAPTCHA.value = true;
+};
 
-      state.email = "";
-      state.password = "";
+const formLoginData = async (data: State) => {
+  try {
+    if (!reCAPTCHA.value) return;
+    const response = await axios.post("https://metsenatclub.xn--h28h.uz/api/v1/auth/login/", {
+      username: data.email,
+      password: data.password,
     });
+
+    console.log(response);
+
+    if (response.status === 200) {
+      localStorage.setItem("accessToken", response.data.access);
+      ad.isAuthenticated = true;
+      await router.push("/main/sponsors");
+    }
+  } catch (e) {
+    alert("Something went wrong, Please try again");
+    console.log(e);
+  }
 };
 </script>
