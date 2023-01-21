@@ -1,5 +1,5 @@
 <template>
-  <div v-if="sponsors.results.length" class="container mx-auto py-6">
+  <div v-if="sponsors.results.length" class="container mx-auto">
     <table
       class="table w-full table-auto border-spacing-y-4 border-separate text-sm responsive-table"
       classes="responsive-table"
@@ -93,11 +93,13 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import axios from "axios";
+import { useRoute } from "vue-router";
 import { admin } from "../../store/index";
 import { Sponsors, Table } from "../../types/Table";
 import { numberWithSpaces } from "../../helpers/Numbers";
 import { formatDateTime } from "../../helpers/DateTime";
 const ad = admin();
+const route = useRoute();
 
 const pageSize = ref<number>(15);
 const pageSizeRes = ref<number>(15);
@@ -136,7 +138,7 @@ const filteredList = computed(() => {
 
 function fetchApi(data: string = "") {
   axios
-    .get("sponsor-list/" + data)
+    .get("https://metsenatclub.xn--h28h.uz/api/v1/sponsor-list/" + data)
     .then(function (response) {
       console.log(response.data);
 
@@ -146,5 +148,11 @@ function fetchApi(data: string = "") {
       console.log(error);
     });
 }
+watch(
+  () => route.path,
+  () => {
+    fetchApi("?page=1&page_size=" + pageSize.value);
+  }
+);
 fetchApi("?page=1&page_size=" + pageSize.value);
 </script>

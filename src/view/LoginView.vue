@@ -33,7 +33,7 @@
               required
             />
           </div>
-          <VueRecaptcha :sitekey="siteKey" :load-recaptcha-script="true" @verify="handleSuccess"></VueRecaptcha>
+          <!-- <VueRecaptcha :sitekey="siteKey" :load-recaptcha-script="true" @verify="handleSuccess"></VueRecaptcha> -->
           <button
             type="submit"
             @click.prevent="() => formLoginData(state)"
@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import { reactive, computed, ref } from "vue";
-import { VueRecaptcha } from "vue-recaptcha";
+// import { VueRecaptcha } from "vue-recaptcha";
 import { useRouter } from "vue-router";
 import { admin } from "../store";
 import axios from "axios";
@@ -64,7 +64,7 @@ const state = reactive<State>({
   email: "",
   password: "",
 });
-const siteKey = "6LfHiBUkAAAAANxOMTNs6clQ9RV8M_5d4nm3Lqdp";
+const ssiteKey = "6LfHiBUkAAAAANxOMTNs6clQ9RV8M_5d4nm3Lqdp";
 const reCAPTCHA = ref<boolean>(false);
 
 const handleSuccess = () => {
@@ -73,7 +73,7 @@ const handleSuccess = () => {
 
 const formLoginData = async (data: State) => {
   try {
-    if (!reCAPTCHA.value) return;
+    // if (!reCAPTCHA.value) return;
     const response = await axios.post("https://metsenatclub.xn--h28h.uz/api/v1/auth/login/", {
       username: data.email,
       password: data.password,
