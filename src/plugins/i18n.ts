@@ -50,14 +50,14 @@ export const messages = {
       grants: "Grantlar",
       duty: "Soliq imtiyozlari",
     },
-    // dashboard: {
-    //   first_banner: "Jami to‘langan summa",
-    //   second_banner: "Jami so‘ralgan summa",
-    //   third_banner: "To‘lanishi kerak summa",
-    //   chart_first: "Homiylar",
-    //   chart_second: "Talabalar",
-    //   chart_title: "Homiylar va talabalar soni",
-    // },
+    dashboard: {
+      first_banner: "Jami to‘langan summa",
+      second_banner: "Jami so‘ralgan summa",
+      third_banner: "To‘lanishi kerak summa",
+      chart_first: "Homiylar",
+      chart_second: "Talabalar",
+      chart_title: "Homiylar va talabalar soni",
+    },
     // header_tabs: {
     //   first: "dashboard",
     //   second: "homiylar",

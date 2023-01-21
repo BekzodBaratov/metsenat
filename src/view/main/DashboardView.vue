@@ -14,7 +14,8 @@
       <div>
         <p class="text-gray-400 text-xs">{{ item.title }}</p>
         <p class="text-2xl text-black font-bold">
-          {{ item.sum }}<span class="text-gray-400 font-bold text-lg">{{ item.payment_type }}</span>
+          {{ item.sum ? numberWithSpaces(item.sum) : "Loading..."
+          }}<span class="text-gray-400 font-bold text-lg">{{ item.payment_type }}</span>
         </p>
       </div>
     </div>
@@ -25,27 +26,47 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, Ref, computed } from "vue";
+import axios from "axios";
 import DashboardChart from "../../components/dashboard/DashboardChart.vue";
+import { numberWithSpaces } from "../../helpers/Numbers";
 
-const dashAll = reactive([
+const dashboardFields: Ref<fieldsType> = ref({});
+
+type fieldsType = {
+  total_must_pay?: number;
+  total_need?: number;
+  total_paid?: number;
+};
+
+const dashAll = computed(() => [
   {
     title: "Jami To'langan summa",
-    sum: "1 684 325 000",
+    sum: dashboardFields.value.total_paid,
     iconColor: "#4C6FFF",
     payment_type: "UZS",
   },
   {
     title: "Jami so'ralgan summa",
-    sum: "14 098 530 000",
+    sum: dashboardFields.value.total_need,
     iconColor: "#EDC700",
     payment_type: "UZS",
   },
   {
     title: "To'lanishi kerak summa",
-    sum: "12 414 205 000",
+    sum: dashboardFields.value.total_must_pay,
     iconColor: "#ED7200",
     payment_type: "UZS",
   },
 ]);
+
+async function fetchApi() {
+  try {
+    const res = await axios.get("https://metsenatclub.xn--h28h.uz/api/v1/dashboard");
+    dashboardFields.value = res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+fetchApi();
 </script>
