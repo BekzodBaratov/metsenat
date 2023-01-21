@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import FilterVue from "../../components/home/Filter.vue";
+import FilterVue from "../../components/sponsors/Filter.vue";
 import { useRoute, useRouter } from "vue-router";
 import { ref, watch } from "vue";
 

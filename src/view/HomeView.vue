@@ -15,122 +15,59 @@
             {{ pn.title }}
           </p>
         </div>
-        <form v-show="isActivePerson === 'jismoniy'" action="jismoniy">
-          <div class="pb-6">
-            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 uppercase"
-              >F.I.SH (Familya Ism Sharifingiz)</label
-            >
-            <input
-              type="text"
-              id="first_name"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="John"
-              required
-            />
-          </div>
-          <div class="pb-6">
-            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 uppercase">Telefon raqamingiz</label>
-            <div
-              class="flex items-center bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full"
-            >
-              <span class="pl-2">+998</span>
-              <input
-                type="tel"
-                id="phone"
-                v-maska:[masks.tel]
-                class="w-full pl-1 p-2.5 outline-none"
-                placeholder="00 000-00-00"
-                autocomplete="off"
-                required
-              />
-            </div>
-          </div>
-          <div class="pb-6">
-            <p class="uppercase font-medium pb-1">To`lov summasi</p>
-            <ul class="grid grid-cols-3 gap-4">
-              <li
-                v-for="i in paySum"
-                :key="i.id"
-                class="bg-gray-100 relative border border-gray-300 py-3 rounded-lg text-center cursor-pointer"
-                :class="jismoniyForm.pay === i.num ? 'bg-gray-300' : ''"
-                @click="() => handlePay(i.id)"
-              >
-                {{ i.num !== 0 ? numberWithSpaces(i.num) : "BOSHQA" }}
-                <span v-if="i.num !== 0" class="text-blue-500 text-sm">UZS</span>
-                <span
-                  v-if="jismoniyForm.pay === i.num"
-                  class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full"
-                >
-                  <img :src="checkIcon" alt="check" />
-                </span>
-              </li>
-            </ul>
-            <input
-              type="number"
-              v-if="isCustomPay"
-              class="flex items-center border p-2 mt-4 bg-gray-100 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full"
-              name="customPay"
-              v-model="jismoniyForm.pay"
-              id="customPay"
-            />
-          </div>
-          <button class="w-full py-2 bg-blue-500 text-white rounded-md text-center">Yuborish</button>
-        </form>
+        <div class="pb-6">
+          <JisForm v-show="isActivePerson === 'jismoniy'" />
+          <YurForm v-show="isActivePerson === 'yuridik'" />
+        </div>
       </div>
     </div>
-    <div>sa</div>
+    <div class="right-section">
+      <div class="w-[70%] mx-auto mt-8 lg:block xs:hidden">
+        <div class="relative mb-[24px]">
+          <div class="absolute -z-10 -left-6 text-gray-400 -top-6">
+            <img src="../assets/icon/double-quote.svg" alt="" />
+          </div>
+          <p class="custom:w-[436px] xs:w-[392px] font-medium text-justify">
+            Yuqori sinflarda bolalar shaxs boʻlib, jamoa boʻlib shakllanadi. Ayni oʻsha paytda ularni oʻzlari oʻrgangan
+            muhitdan ajratib qoʻymaslik kerak.
+          </p>
+          <div class="absolute -z-10 -right-4 -bottom-2">
+            <img src="../assets/icon/double-quote.svg" class="rotate-180" alt="" />
+          </div>
+        </div>
+        <div class="">
+          <div class="flex items-center gap-[16px]">
+            <img src="../assets/icon/president-picture.jpg" class="w-16 h-16 object-cover rounded-[16px]" alt="" />
+            <div class="">
+              <h6 class="text-xl font-medium">Shavkat Mirziyoyev</h6>
+              <p class="text-[#86868B]">O‘zbekiston Respublikasi Prezidenti</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img
+      src="../assets/icon/banner-01.svg"
+      class="absolute transition-all ease-linear lg:block xs:hidden -bottom-48 -right-96 -z-20"
+      alt=""
+    />
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import { vMaska } from "maska";
-import { telAndSumMask } from "../plugins/vmaska";
-import { numberWithSpaces } from "../helpers/Numbers";
-import checkIcon from "../assets/icon/checked-icon.svg";
+import JisForm from "../components/home/JisForm.vue";
+import YurForm from "../components/home/YurForm.vue";
 
-const masks = reactive(telAndSumMask);
-
+const isActivePerson = ref<string>("jismoniy");
 interface Person {
   title: string;
   preson: string;
 }
-const isActivePerson = ref<string>("jismoniy");
 const presons = [
   { title: "Jismoniy shaxs", preson: "jismoniy" },
   { title: "Yuridik shaxs", preson: "yuridik" },
 ] as Person[];
-
-interface PaySum {
-  id: number;
-  num: number;
-}
-const paySum = reactive<PaySum[]>([
-  { id: 0, num: 1000000 },
-  { id: 1, num: 2000000 },
-  { id: 2, num: 3000000 },
-  { id: 3, num: 4000000 },
-  { id: 4, num: 5000000 },
-  { id: 5, num: 0 },
-]);
-
-interface JismoniyForm {
-  fish: string;
-  tel: string;
-  pay: number;
-}
-
-const jismoniyForm = ref<JismoniyForm>({
-  fish: "",
-  tel: "",
-  pay: 1000000,
-});
-
-const isCustomPay = ref<boolean>(false);
-const handlePay = (id: number) => {
-  jismoniyForm.value.pay = paySum[id].num;
-  paySum[id].num === 0 ? (isCustomPay.value = true) : (isCustomPay.value = false);
-};
 </script>
 
 <style scoped>
