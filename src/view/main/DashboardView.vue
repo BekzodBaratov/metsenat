@@ -19,10 +19,14 @@
       </div>
     </div>
   </div>
+  <div class="container mx-auto my-4">
+    <DashboardChart />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
+import DashboardChart from "../../components/dashboard/DashboardChart.vue";
 
 const dashAll = reactive([
   {

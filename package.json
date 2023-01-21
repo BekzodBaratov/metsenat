@@ -17,6 +17,7 @@
     "path": "^0.12.7",
     "pinia": "^2.0.29",
     "vue": "^3.2.45",
+    "vue-apexcharts": "^1.6.2",
     "vue-i18n": "^9.2.2",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.1.6",
