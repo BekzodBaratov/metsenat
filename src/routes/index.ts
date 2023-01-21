@@ -5,6 +5,7 @@ import MainView from "../view/main/MainView.vue";
 import DashboardView from "../view/main/DashboardView.vue";
 import SponsorsView from "../view/main/SponsorsView.vue";
 import StudentView from "../view/main/StudentView.vue";
+import PageNotFound from "../view/PageNotFound.vue";
 
 const routes = [
   {
@@ -18,7 +19,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    // beforeEnter: hideForAuth,
+    beforeEnter: hideForAuth,
     meta: { requiresGuest: true },
     component: Login,
   },
@@ -49,6 +50,7 @@ const routes = [
       },
     ],
   },
+  { path: "/:pathMatch(.*)*", name: "NotFound", component: PageNotFound },
 ];
 
 const router = createRouter({
@@ -60,12 +62,12 @@ const router = createRouter({
   routes,
 });
 
-// function hideForAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
-//   if (to.path === "/login" && localStorage.getItem("access_token")) {
-//     next("/");
-//   } else {
-//     next();
-//   }
-// }
+function hideForAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+  if (to.path === "/login" && localStorage.getItem("access_token")) {
+    next("/");
+  } else {
+    next();
+  }
+}
 
 export default router;

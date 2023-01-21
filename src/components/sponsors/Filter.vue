@@ -65,6 +65,13 @@ const filter = ref({
 });
 
 watch(
+  () => route.path,
+  () => {
+    currPath.value = route.path;
+  }
+);
+
+watch(
   () => filter.value.search,
   () => {
     ad.mainSearch = filter.value.search;
