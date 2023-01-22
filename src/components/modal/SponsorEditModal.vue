@@ -15,30 +15,26 @@
         </p>
       </div>
       <div class="pb-3">
-        <label for="first_name" class="block mb-1 text-xs font-medium text-gray-900 uppercase"
-          >F.I.SH (Familya Ism Sharifingiz)</label
-        >
+        <label for="first_name" class="formLabel">F.I.SH (Familya Ism Sharifingiz)</label>
         <input
           type="text"
           id="first_name"
           v-model="formData.full_name"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          class="formInput"
           placeholder="John Doe Boboyev"
           required
         />
       </div>
       <div class="pb-3">
-        <label for="phone" class="block mb-1 text-xs font-medium text-gray-900 uppercase">Telefon raqamingiz</label>
-        <div
-          class="flex items-center bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full"
-        >
+        <label for="phone" class="formLabel">Telefon raqamingiz</label>
+        <div class="formTelDiv">
           <span class="pl-2">+998</span>
           <input
             type="tel"
             id="phone"
             v-maska:[masks.tel]
             v-model="formData.phone"
-            class="w-full pl-1 p-2.5 outline-none bg-transparent"
+            class="formTelInp"
             placeholder="00 000-00-00"
             autocomplete="off"
             required
@@ -46,43 +42,30 @@
         </div>
       </div>
       <div class="pb-3">
-        <p class="block mb-1 text-xs font-medium text-gray-900 uppercase">Holati</p>
-        <select
-          class="border-gray-200 border bg-gray-50 focus:border-blueCustom outline-blueCustom rounded-md py-2 w-full"
-          name="ariza"
-          v-model="formData.type"
-          id="ariza"
-        >
+        <p class="formLabel">Holati</p>
+        <select class="formSelect" name="ariza" v-model="formData.type" id="ariza">
           <option v-for="val in selectData" :key="val.id" :value="val.type">{{ val.type }}</option>
         </select>
       </div>
       <div class="pb-3">
-        <p class="block mb-1 text-xs font-medium text-gray-900 uppercase">Homiylik summasi</p>
-        <select
-          class="border-gray-200 border bg-gray-50 focus:border-blueCustom outline-blueCustom rounded-md py-2 w-full"
-          name="sum"
-          v-model="formData.sum"
-          id="sum"
-        >
+        <p class="formLabel">Homiylik summasi</p>
+        <select class="formSelect" name="sum" v-model="formData.sum" id="sum">
           <option v-for="val in tariff_list" :key="val.id" :value="val.summa">{{ val.summa }}</option>
         </select>
       </div>
       <div v-if="is_legal === true" class="pb-6">
-        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 uppercase">Tashkilot nomi</label>
+        <label for="first_name" class="formLabel">Tashkilot nomi</label>
         <input
           type="text"
           id="first_name"
           v-model="formData.firm"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          class="formInput"
           placeholder="Magic Soft MCHJ"
           required
         />
       </div>
       <div class="flex justify-end">
-        <button
-          @click="handleUpdete"
-          class="bg-blueCustom text-white text-sm hover:bg-blue-600 duration-200 py-2 px-4 rounded-md flex gap-2 items-center"
-        >
+        <button @click="handleUpdete" class="btnBlue">
           <i class="fa-regular fa-floppy-disk"></i>
           Saqlash
         </button>

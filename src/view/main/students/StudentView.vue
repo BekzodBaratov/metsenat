@@ -160,8 +160,6 @@ function fetchApi(data: string = "") {
   axios
     .get("https://metsenatclub.xn--h28h.uz/api/v1/student-list/" + data)
     .then(function (response) {
-      console.log(response.data);
-
       students.value = response.data;
     })
     .catch(function (error) {

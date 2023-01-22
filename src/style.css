@@ -28,10 +28,27 @@ body {
   border-radius: 10px;
 }
 
+.btnBlue {
+  @apply bg-blueCustom text-white text-sm hover:bg-blue-600 duration-200 py-2 px-4 rounded-md flex gap-2 items-center;
+}
 .md-text {
   @apply text-2xl font-semibold;
 }
-
+.formLabel {
+  @apply block mb-1 text-xs font-medium text-gray-900 uppercase;
+}
+.formInput {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+}
+.formSelect {
+  @apply border-gray-200 border bg-gray-50 focus:border-blueCustom outline-blueCustom rounded-md py-2 w-full;
+}
+.formTelInp {
+  @apply w-full pl-1 p-2.5 outline-none bg-transparent;
+}
+.formTelDiv {
+  @apply flex items-center bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full;
+}
 
 @media (min-width: 240px) {
   html {

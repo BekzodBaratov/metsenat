@@ -139,8 +139,6 @@ function fetchApi(data: string = "") {
   axios
     .get("https://metsenatclub.xn--h28h.uz/api/v1/sponsor-list/" + data)
     .then(function (response) {
-      console.log(response.data);
-
       sponsors.value = response.data;
     })
     .catch(function (error) {

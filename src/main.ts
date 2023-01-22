@@ -5,7 +5,7 @@ import { createI18n } from "vue-i18n";
 import App from "./App.vue";
 import router from "./routes/index";
 
-// import { authProtectedApi, fetchData, publicApi } from "./plugins/axios";
+import { authProtectedApi, fetchData, publicApi } from "./plugins/axios";
 import "./plugins/axios";
 
 import VueApexCharts from "vue3-apexcharts";
@@ -32,8 +32,8 @@ app.use(i18n);
 app.use(router);
 app.use(pinia);
 
-// app.provide("axios", publicApi);
-// app.provide("fetchData", fetchData);
+app.provide("axios", publicApi);
+app.provide("fetchData", fetchData);
 // app.provide("protectedApi", authProtectedApi);
 
 app.mount("#app");
