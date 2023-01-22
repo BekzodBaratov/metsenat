@@ -59,7 +59,7 @@ const routes = [
     // beforeEnter: guardAuth,
   },
   {
-    path: "/students/create",
+    path: "/main/students/create",
     name: "student-add",
     component: AddStudent,
     meta: {

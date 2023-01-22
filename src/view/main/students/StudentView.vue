@@ -1,5 +1,14 @@
 <template>
   <div v-if="students.results.length" class="container mx-auto">
+    <div class="flex justify-end">
+      <RouterLink
+        to="/main/students/create"
+        class="bg-blueCustom py-2 px-5 cursor-pointer hover:bg-blue-600 duration-200 rounded-md text-white space-x-1 text-sm"
+      >
+        <i class="fas fa-plus"></i>
+        <span>Talaba qo`shish</span>
+      </RouterLink>
+    </div>
     <table
       class="table w-full table-auto border-spacing-y-4 border-separate text-sm responsive-table"
       classes="responsive-table"
