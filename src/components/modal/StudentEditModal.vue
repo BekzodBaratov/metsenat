@@ -1,7 +1,7 @@
 <template>
   <Modal>
     <template #title>Tahrirlash</template>
-    <template #content> edit modal sponsor </template>
+    <template #content> edit modal student </template>
   </Modal>
 </template>
 

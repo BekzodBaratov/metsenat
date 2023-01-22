@@ -44,7 +44,9 @@
             {{ item.get_status_display }}
           </td>
           <td class="py-6 bg-white flex justify-center rounded-r-md">
-            <img src="../../assets/filter/eye_1.svg" alt="view" />
+            <RouterLink :to="'/main/students/' + item.id">
+              <img src="../../../assets/filter/eye_1.svg" alt="view" />
+            </RouterLink>
           </td>
         </tr>
       </tbody>
