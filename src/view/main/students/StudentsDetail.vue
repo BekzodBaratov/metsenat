@@ -93,7 +93,7 @@
           </li>
           <li class="">
             <div class="uppercase text-xs font-medium text-[#B5B5C3] mb-2">Talabalik turi</div>
-            <div class="capitalize font-medium text-base">{{ student.type }}</div>
+            <div class="capitalize font-medium text-base">{{ getDiplomaType(student.type) }}</div>
           </li>
           <li class="">
             <div class="uppercase text-xs font-medium text-[#B5B5C3] mb-2">Ajratilingan summa</div>
@@ -106,35 +106,31 @@
         </ul>
       </div>
     </div>
-    <!-- <div class="bg-white rounded-xl p-8 max-w-[793px] w-full mx-auto">
+
+    <div class="bg-white rounded-xl p-8 max-w-[793px] w-full mx-auto">
       <div class="">
         <div class="flex justify-between items-center">
           <h6 class="text-2xl font-bold">Talabaga homiylar</h6>
-          <button
-            class="flex items-center py-[9px] px-[32px] bg-[#EDF1FD] hover:bg-[#E0E7FF] rounded-[5px] text-[#3365FC]"
-            @click="toggleModal(2)"
+          <div
+            class="bg-blue-100 py-2 px-3 cursor-pointer hover:bg-blue-200 duration-200 rounded-md text-center text-blueCustom space-x-3"
           >
-            <img src="@/assets/icons/website/increase-icon.svg" class="mr-[10px]" alt="Edit Icon" />
-            Homiy qo‘shish
-          </button>
+            <i class="fa-solid fa-plus"></i>
+            <span class="text-sm font-semibold">Homiy qushish</span>
+          </div>
         </div>
         <div class="mt-[26px]" v-if="sponsors.length > 0">
-          <Table classes="w-full table-auto border-separate border-spacing-y-4">
-            <template #thead>
+          <table class="table w-full table-auto border-spacing-y-4 border-separate text-sm responsive-table">
+            <thead>
               <tr class="text-xs text-[#B1B1B8] uppercase text-center">
                 <th class="text-left px-4">#</th>
                 <th class="text-left">F.I.SH.</th>
                 <th class="">Ajratilingan summa</th>
                 <th class="">Amallar</th>
               </tr>
-            </template>
-            <template #tbody>
-              <tr
-                v-for="(sponsor, idx) in sponsors"
-                :key="sponsor.summa + sponsor.id"
-                class="border-spacing-y-4 border-separate text-sm border-[#FBFBFC]"
-              >
-                <td class="py-[23px] bg-[#FBFBFC] rounded-l-xl px-4 border-y border-l">
+            </thead>
+            <tbody>
+              <tr v-for="(sponsor, idx) in sponsors" :key="sponsor.summa + sponsor.id" class="text-sm border-gray-300">
+                <td class="py-[23px] bg-[#FBFBFC] font-semibold rounded-l-xl px-4 border-y border-l">
                   {{ idx + 1 }}
                 </td>
                 <td class="py-[23px] bg-[#FBFBFC] font-bold text-ellipsis border-y">{{ sponsor.sponsor.full_name }}</td>
@@ -146,16 +142,19 @@
                   <span class="text-[#B2B7C1]">UZS</span>
                 </td>
                 <td class="py-[23px] bg-[#FBFBFC] text-center rounded-r-[12px] px-4 border-y border-r">
-                  <button @click="selectSponsor(sponsor.sponsor.id)" class="cursor-pointer">
+                  <!-- <button @click="selectSponsor(sponsor.sponsor.id)" class="cursor-pointer">
                     <span class="icon-edit text-2xl text-blue-600"></span>
-                  </button>
+                  </button> -->
+                  <div class="text-blueCustom p-1 cursor-pointer text-lg">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                  </div>
                 </td>
               </tr>
-            </template>
-          </Table>
+            </tbody>
+          </table>
         </div>
       </div>
-    </div> -->
+    </div>
   </section>
   <EditModal />
 </template>
@@ -165,28 +164,27 @@ import { ref } from "vue";
 import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import EditModal from "../../../components/modal/StudentEditModal.vue";
+import { studentSponsorType, studentType } from "../../../types/Student";
 import { numberWithSpaces } from "../../../helpers/Numbers";
 import { admin } from "../../../store";
 const ad = admin();
 
-type sponsorType = {
-  id: number;
-  full_name: string;
-  phone: string;
-  sum: number;
-  is_legal: boolean;
-  get_status_display: string;
-  firm: string;
+const getDiplomaType = (type: number | string) => {
+  if (type == 1) return "Bakalavr";
+  else if (type == 2) return "Magistr";
+  else if (type == 3) return "Doktorantura";
+  else return "Bakalavr";
 };
 
 const route = useRoute();
 const router = useRouter();
-const student: sponsorType | any = ref({});
-const sponsorId = ref(route.params.id);
+const student: studentType | any = ref({});
+const sponsors: studentSponsorType | any = ref({});
+const studentId = ref(route.params.id);
 
 async function fetchData() {
   try {
-    const res = await axios.get("https://metsenatclub.xn--h28h.uz/api/v1/student-detail/" + sponsorId.value);
+    const res = await axios.get("https://metsenatclub.xn--h28h.uz/api/v1/student-detail/" + studentId.value);
     if (res.status === 200) {
       student.value = res.data;
     }
@@ -194,7 +192,19 @@ async function fetchData() {
     console.log(e.message);
   }
 }
+async function fetchSponsor() {
+  try {
+    const res = await axios.get("https://metsenatclub.xn--h28h.uz/api/v1/student-sponsor/" + studentId.value);
+    if (res.status === 200) {
+      sponsors.value = res.data.sponsors;
+      console.log(sponsors.value);
+    }
+  } catch (e: any) {
+    console.log(e.message);
+  }
+}
 fetchData();
+fetchSponsor();
 </script>
 
 <style scoped>

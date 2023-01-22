@@ -1,9 +1,6 @@
 <template>
   <div v-if="sponsors.results.length" class="container mx-auto">
-    <table
-      class="table w-full table-auto border-spacing-y-4 border-separate text-sm responsive-table"
-      classes="responsive-table"
-    >
+    <table class="table w-full table-auto border-spacing-y-4 border-separate text-sm responsive-table">
       <thead class="uppercase">
         <tr class="text-xs text-[#B1B1B8] uppercase text-center font-semibold">
           <th class="text-center text-salate-700">#</th>
