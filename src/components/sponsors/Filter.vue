@@ -6,7 +6,7 @@
           v-for="sel in filter.select"
           :key="sel.id"
           :to="sel.link"
-          :class="currPath === sel.link ? 'active-filter' : ''"
+          :class="route.path === sel.link ? 'active-filter' : ''"
           class="py-2 w-40 text-center cursor-pointer"
         >
           {{ sel.title }}
@@ -53,7 +53,6 @@ import { filterSelect } from "../../types/MainFilter";
 const sponsore = sponsorsStore();
 const ad = admin();
 const route = useRoute();
-const currPath = ref<string>("/main/sponsors");
 
 const filter = ref({
   select: [
@@ -65,23 +64,9 @@ const filter = ref({
 });
 
 watch(
-  () => route.path,
-  () => {
-    currPath.value = route.path;
-  }
-);
-
-watch(
   () => filter.value.search,
   () => {
     ad.mainSearch = filter.value.search;
-  }
-);
-
-watch(
-  () => route.path,
-  function () {
-    currPath.value = route.path;
   }
 );
 </script>

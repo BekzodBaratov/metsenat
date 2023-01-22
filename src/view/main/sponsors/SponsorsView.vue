@@ -94,10 +94,10 @@
 import { computed, ref, watch } from "vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
-import { admin } from "../../store/index";
-import { Sponsors } from "../../types/Table";
-import { numberWithSpaces } from "../../helpers/Numbers";
-import { formatDateTime } from "../../helpers/DateTime";
+import { admin } from "../../../store/index";
+import { Sponsors } from "../../../types/Table";
+import { numberWithSpaces } from "../../../helpers/Numbers";
+import { formatDateTime } from "../../../helpers/DateTime";
 const ad = admin();
 const route = useRoute();
 

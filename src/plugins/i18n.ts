@@ -7,14 +7,14 @@ export const messages = {
       grants: "Scholarships",
       duty: "Tax benefits",
     },
-    // dashboard: {
-    //   first_banner: "Total amount paid",
-    //   second_banner: "Total amount requested",
-    //   third_banner: "Amount to be paid",
-    //   chart_first: "Sponsors",
-    //   chart_second: "Students",
-    //   chart_title: "number of patrons and students",
-    // },
+    dashboard: {
+      first_banner: "Total amount paid",
+      second_banner: "Total amount requested",
+      third_banner: "Amount to be paid",
+      chart_first: "Sponsors",
+      chart_second: "Students",
+      chart_title: "number of patrons and students",
+    },
     // header_tabs: {
     //   first: "dashboard",
     //   second: "sponsors",

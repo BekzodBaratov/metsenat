@@ -44,7 +44,7 @@
             }}</RouterLink>
           </li>
           <li>
-            <RouterLink class="flex items-center gap-1 group" to="login">
+            <RouterLink class="flex items-center gap-1 group" to="/login">
               <span><img src="../../assets/header/log-out_1.svg" alt="login" /></span>
               <span class="group-hover:text-blue-400 duration-200">{{ t("navbar.login") }}</span>
             </RouterLink>

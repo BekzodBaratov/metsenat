@@ -30,7 +30,8 @@ import { ref, reactive, Ref, computed } from "vue";
 import axios from "axios";
 import DashboardChart from "../../components/dashboard/DashboardChart.vue";
 import { numberWithSpaces } from "../../helpers/Numbers";
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const dashboardFields: Ref<fieldsType> = ref({});
 
 type fieldsType = {
@@ -41,19 +42,19 @@ type fieldsType = {
 
 const dashAll = computed(() => [
   {
-    title: "Jami To'langan summa",
+    title: t("dashboard.first_banner"),
     sum: dashboardFields.value.total_paid,
     iconColor: "#4C6FFF",
     payment_type: "UZS",
   },
   {
-    title: "Jami so'ralgan summa",
+    title: t("dashboard.second_banner"),
     sum: dashboardFields.value.total_need,
     iconColor: "#EDC700",
     payment_type: "UZS",
   },
   {
-    title: "To'lanishi kerak summa",
+    title: t("dashboard.third_banner"),
     sum: dashboardFields.value.total_must_pay,
     iconColor: "#ED7200",
     payment_type: "UZS",
