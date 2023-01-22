@@ -42,12 +42,6 @@
         </div>
       </div>
       <div class="pb-3">
-        <p class="formLabel">Holati</p>
-        <select class="formSelect" name="ariza" v-model="formData.type" id="ariza">
-          <option v-for="val in selectData" :key="val.id" :value="val.type">{{ val.type }}</option>
-        </select>
-      </div>
-      <div class="pb-3">
         <p class="formLabel">Homiylik summasi</p>
         <select class="formSelect" name="sum" v-model="formData.sum" id="sum">
           <option v-for="val in tariff_list" :key="val.id" :value="val.summa">{{ val.summa }}</option>
@@ -77,19 +71,20 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
-import { publicApi } from "../../plugins/axios";
 import axios from "axios";
 import { vMaska } from "maska";
 import { telAndSumMask } from "../../plugins/vmaska";
 import Modal from "./Modal.vue";
+import { useRouter } from "vue-router";
+
 const masks = reactive(telAndSumMask);
 const route = useRoute();
+const router = useRouter();
 
 const sponsorId = ref(route.params.id);
 const formData = ref({
   full_name: "",
   phone: "",
-  type: "",
   sum: 0,
   firm: "",
 });
@@ -101,16 +96,20 @@ const handleUpdete = () => {
 async function patchApi(data: any) {
   const dataPatch = {
     full_name: data.full_name,
-    phone: data.phone,
+    phone: "+998 " + data.phone,
     sum: data.sum,
     firm: data.firm,
     is_legal: is_legal.value,
     comment: "",
   };
   try {
-    const res = await publicApi.patch("/sponsor-update/" + sponsorId.value, dataPatch);
-    console.log(res);
-    console.log(dataPatch);
+    const res = await axios.patch(
+      `https://metsenatclub.xn--h28h.uz/api/v1/sponsor-update/${sponsorId.value}/`,
+      dataPatch
+    );
+    if (res.status === 200) {
+      alert("Your data has been updated");
+    }
   } catch (e) {
     console.log(e);
   }
@@ -153,12 +152,9 @@ async function fetchData() {
   try {
     const res = await axios.get("https://metsenatclub.xn--h28h.uz/api/v1/sponsor-detail/" + sponsorId.value);
     if (res.status === 200) {
-      console.log(res.data);
-
       formData.value = {
         full_name: res.data.full_name,
         phone: res.data.phone,
-        type: res.data.get_status_display,
         sum: res.data.sum,
         firm: res.data.firm,
       };

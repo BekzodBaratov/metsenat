@@ -1,7 +1,7 @@
 <template>
   <div class="py-6 bg-white">
     <div class="flex items-center justify-start container mx-auto">
-      <button class="mr-6 text-xl" @click="router.push({ path: '/main/students' })">
+      <button class="mr-6 text-xl" @click="router.go(-1)">
         <i class="fa-solid fa-arrow-left-long"></i>
       </button>
       <h6 class="text-2xl font-bold mr-3">Talaba qo'shish</h6>
@@ -51,7 +51,7 @@
             v-model="addStudent.otm"
             id="ariza"
           >
-            <option v-for="val in selectData" :key="val.id" :value="val.name" class="max-w-md">{{ val.name }}</option>
+            <option v-for="val in selectData" :key="val.id" :value="val.id" class="max-w-md">{{ val.name }}</option>
           </select>
         </div>
         <div class="grid grid-cols-2 gap-4 items-end py-6">
@@ -102,7 +102,6 @@ import { ref, reactive, Ref } from "vue";
 import { vMaska } from "maska";
 import { telAndSumMask } from "../../../plugins/vmaska";
 import axios from "axios";
-import { publicApi } from "../../../plugins/axios";
 import { useRouter } from "vue-router";
 const masks = reactive(telAndSumMask);
 const router = useRouter();
@@ -114,7 +113,7 @@ type SelectData = {
 const addStudent = ref({
   Full_name: "",
   phone: "",
-  otm: "OTM ni tanlang",
+  otm: 10,
   student_type: "1",
   contract_sum: "",
 });
@@ -142,9 +141,9 @@ async function addStudentApi(data: any) {
     given: 0,
   };
   try {
-    console.log(dataForPost);
-    const res = await publicApi.post("/student-create", dataForPost);
+    const res = await axios.post("https://metsenatclub.xn--h28h.uz/api/v1/student-create/", dataForPost);
     console.log(res);
+    console.log(dataForPost);
 
     if (res.status == 201) await router.push({ path: `/main/students/${res.data.id}` });
   } catch (e) {
