@@ -9,7 +9,7 @@
           <p @click="closeModal" class="cursor-pointer text-gray-400 py-2">close</p>
         </div>
         <!-- <i class="fa-solid fa-xmark w-6 aspect-square text-black"></i> -->
-        <hr class="my-6" />
+        <hr />
         <slot name="content"></slot>
       </div>
     </div>

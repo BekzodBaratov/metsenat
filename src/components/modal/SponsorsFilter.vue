@@ -11,6 +11,7 @@
         >
           <option v-for="val in selectData" :key="val.id" value="Barchasi">{{ val.type }}</option>
         </select>
+
         <div class="py-6">
           <p class="uppercase font-medium text-sm pb-1">To`lov summasi</p>
           <ul class="grid grid-cols-3 gap-4">
@@ -57,6 +58,13 @@ interface SelectData {
   id: number;
   type: string;
 }
+const selectData = reactive<SelectData[]>([
+  { id: 1, type: "Barchasi" },
+  { id: 2, type: "Yangi" },
+  { id: 3, type: "Moderatsiyada" },
+  { id: 4, type: "Tasdiqlangan" },
+  { id: 5, type: "Bekor qilingan" },
+]);
 const paySum = reactive<PaySum[]>([
   { id: 0, num: 1000000 },
   { id: 1, num: 2000000 },
@@ -64,13 +72,6 @@ const paySum = reactive<PaySum[]>([
   { id: 3, num: 4000000 },
   { id: 4, num: 5000000 },
   { id: 5, num: 0 },
-]);
-const selectData = reactive<SelectData[]>([
-  { id: 1, type: "Barchasi" },
-  { id: 2, type: "Yangi" },
-  { id: 3, type: "Moderatsiyada" },
-  { id: 4, type: "Tasdiqlangan" },
-  { id: 5, type: "Bekor qilingan" },
 ]);
 
 const isCustomPay = ref<boolean>(false);
