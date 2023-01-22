@@ -32,7 +32,7 @@ const routes = [
     name: "mainView",
 
     component: MainView,
-    redirect: "/main/sponsors",
+    redirect: "/main/dashboard",
     children: [
       {
         path: "dashboard",

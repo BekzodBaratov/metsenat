@@ -36,7 +36,9 @@
             {{ item.get_status_display }}
           </td>
           <td class="py-6 bg-white flex justify-center rounded-r-md">
-            <img src="../../assets/filter/eye_1.svg" alt="view" />
+            <RouterLink :to="`/main/sponsors/${item.id}`">
+              <img class="p-3" src="../../../assets/filter/eye_1.svg" alt="view" />
+            </RouterLink>
           </td>
         </tr>
       </tbody>
