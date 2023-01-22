@@ -1,4 +1,12 @@
 <template>
+  <div class="py-6 bg-white">
+    <div class="flex items-center justify-start container mx-auto">
+      <button class="mr-6 text-xl" @click="router.push({ path: '/main/students' })">
+        <i class="fa-solid fa-arrow-left-long"></i>
+      </button>
+      <h6 class="text-2xl font-bold mr-3">Talaba qo'shish</h6>
+    </div>
+  </div>
   <section>
     <form class="container mx-auto mb-7" action="addStudent">
       <div class="bg-white shadow-md rounded-xl p-8 max-w-[790px] w-full mx-auto mb-10 mt-10">
@@ -95,7 +103,9 @@ import { vMaska } from "maska";
 import { telAndSumMask } from "../../../plugins/vmaska";
 import axios from "axios";
 import { publicApi } from "../../../plugins/axios";
+import { useRouter } from "vue-router";
 const masks = reactive(telAndSumMask);
+const router = useRouter();
 
 type SelectData = {
   id: number;
@@ -111,7 +121,6 @@ const addStudent = ref({
 const selectData: Ref<SelectData[]> = ref([]);
 
 const handleSubmit = () => {
-  console.log(addStudent.value);
   addStudentApi(addStudent.value);
 };
 
@@ -124,17 +133,20 @@ const fetchOtmList = async () => {
   }
 };
 async function addStudentApi(data: any) {
+  const dataForPost = {
+    full_name: data.Full_name,
+    type: +data.student_type,
+    phone: "+998 " + data.phone,
+    institute: data.otm,
+    contract: +data.contract_sum,
+    given: 0,
+  };
   try {
-    const res = await publicApi.post("/student-create", {
-      full_name: data.Full_name,
-      type: data.student_type,
-      phone: "+998 " + data.phone,
-      institute: data.otm,
-      contract: +data.contract_sum,
-      given: 0,
-    });
+    console.log(dataForPost);
+    const res = await publicApi.post("/student-create", dataForPost);
+    console.log(res);
 
-    if (res.status == 200) console.log(res);
+    if (res.status == 201) await router.push({ path: `/main/students/${res.data.id}` });
   } catch (e) {
     console.log(e);
   }

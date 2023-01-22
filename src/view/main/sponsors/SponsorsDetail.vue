@@ -1,5 +1,16 @@
 <template>
   <div class="">
+    <div class="py-6 bg-white">
+      <div class="flex items-center justify-start container mx-auto">
+        <button class="mr-6 text-xl" @click="router.push({ path: '/main/students' })">
+          <i class="fa-solid fa-arrow-left-long"></i>
+        </button>
+        <h6 class="text-2xl font-bold mr-3">{{ sponsor.full_name }}</h6>
+        <span class="bg-[#DDFFF2] py-2.5 px-3 rounded text-[#00CF83] text-xs flex items-center font-normal">
+          {{ sponsor.get_status_display }}
+        </span>
+      </div>
+    </div>
     <section class="details py-10" v-if="sponsor.id">
       <div class="bg-white rounded-xl p-8 max-w-[793px] w-full mx-auto">
         <div class="flex justify-between items-center mb-[32px]">
