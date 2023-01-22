@@ -67,7 +67,7 @@
             <input
               type="number"
               id="kontrakt_summa"
-              v-model="addStudent.Full_name"
+              v-model="addStudent.contract_sum"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="7 014 540 sum"
               required
@@ -94,6 +94,7 @@ import { ref, reactive, Ref } from "vue";
 import { vMaska } from "maska";
 import { telAndSumMask } from "../../../plugins/vmaska";
 import axios from "axios";
+import { publicApi } from "../../../plugins/axios";
 const masks = reactive(telAndSumMask);
 
 type SelectData = {
@@ -111,6 +112,7 @@ const selectData: Ref<SelectData[]> = ref([]);
 
 const handleSubmit = () => {
   console.log(addStudent.value);
+  addStudentApi(addStudent.value);
 };
 
 const fetchOtmList = async () => {
@@ -121,5 +123,21 @@ const fetchOtmList = async () => {
     console.log(e);
   }
 };
+async function addStudentApi(data: any) {
+  try {
+    const res = await publicApi.post("/student-create", {
+      full_name: data.Full_name,
+      type: data.student_type,
+      phone: "+998 " + data.phone,
+      institute: data.otm,
+      contract: +data.contract_sum,
+      given: 0,
+    });
+
+    if (res.status == 200) console.log(res);
+  } catch (e) {
+    console.log(e);
+  }
+}
 fetchOtmList();
 </script>
