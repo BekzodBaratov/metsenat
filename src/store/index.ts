@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-// import router from "../routes";
 
 export const admin = defineStore("admin", {
   state: () => ({
@@ -7,5 +6,6 @@ export const admin = defineStore("admin", {
     sponsors: [],
     isAuthenticated: false,
     mainSearch: "",
+    studentSponsorId: null,
   }),
 });

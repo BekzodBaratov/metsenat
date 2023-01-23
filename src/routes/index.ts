@@ -85,32 +85,6 @@ const routes = [
   { path: "/:pathMatch(.*)*", name: "NotFound", component: PageNotFound },
 ];
 
-// function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: any) {
-//   const userStore = admin();
-//   if (to.matched.some((record) => record.meta.requiresAuth)) {
-//     // this route requires auth, check if logged in
-//     // if not to redirect to login page.
-//     if (!userStore.isLoggedIn && !localStorage.getItem("accessToken")) {
-//       next({ name: "Login" });
-//     } else if (userStore.isLoggedIn) {
-//       next();
-//     } else {
-//       next(); // go to wherever I'm going
-//     }
-//   } else {
-//     next();
-//   }
-// }
-
-// function hideForAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
-//   const userStore = admin();
-//   if (to.path === "/login" && localStorage.getItem("access_token")) {
-//     next("/");
-//   } else {
-//     next();
-//   }
-// }
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.Base_URL),
   scrollBehavior() {

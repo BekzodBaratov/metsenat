@@ -1,5 +1,3 @@
-import { reactive } from "vue";
-
 type instituteType = {
   id: number;
   name: string;

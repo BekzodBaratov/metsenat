@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import Modal from "./Modal.vue";
 import axios from "axios";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { admin } from "../../store";
 const ad = admin();
@@ -38,17 +38,8 @@ interface Sponsors {
   id: number;
   full_name: string;
 }
-const props = defineProps(["currSponsorId"]);
+// ad.studentSponsorId
 const allSponsors = ref<Sponsors[]>([]);
-console.log(props.currSponsorId);
-watch(
-  () => {
-    props.currSponsorId;
-  },
-  () => {
-    console.log(props.currSponsorId);
-  }
-);
 
 const state = ref({
   sponsorId: null,

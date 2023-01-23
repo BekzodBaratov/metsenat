@@ -15,7 +15,7 @@
       <div class="flex justify-between items-center mb-8">
         <h6 class="text-2xl">Talaba haqida</h6>
         <div
-          @click="() => handleModalActive(1)"
+          @click="() => handleModalActive(1, null)"
           class="text-blueCustom text-sm cursor-pointer rounded-md bg-blue-100 py-3 px-5 flex items-center justify-center gap-3 font-semibold"
         >
           <i class="fa-regular fa-pen-to-square"></i>
@@ -73,7 +73,7 @@
         <div class="flex justify-between items-center">
           <h6 class="text-2xl font-bold">Talabaga homiylar</h6>
           <div
-            @click="() => handleModalActive(2)"
+            @click="() => handleModalActive(2, null)"
             class="bg-blue-100 py-2 px-3 cursor-pointer hover:bg-blue-200 duration-200 rounded-md text-center text-blueCustom space-x-3"
           >
             <i class="fa-solid fa-plus"></i>
@@ -120,7 +120,7 @@
   </section>
   <EditModal v-if="currModal === 1" />
   <AddSponsorModal v-if="currModal === 2" />
-  <EditSponsorModal :currSponsorId="currSponsorId" v-if="currModal === 3" />
+  <EditSponsorModal v-if="currModal === 3" />
 </template>
 
 <script setup lang="ts">
@@ -148,12 +148,10 @@ const student: studentType | any = ref({});
 const sponsors: studentSponsorType | any = ref({});
 const studentId = ref(route.params.id);
 
-const currSponsorId = ref(0);
 const currModal = ref<number | null>(null);
-function handleModalActive(activeIndex: number, id: number) {
+function handleModalActive(activeIndex: number, id: number | null) {
   currModal.value = activeIndex;
   ad.admin = true;
-  currSponsorId.value = id;
 }
 
 async function fetchData() {
