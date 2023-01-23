@@ -41,17 +41,18 @@ interface Sponsors {
 const allSponsors = ref<Sponsors[]>([]);
 
 const state = ref({
-  sponsorId: null,
+  sponsorId: "",
   sponsorSum: null,
 });
 
 function handleForm() {
+  if (state.value.sponsorId == "" || state.value.sponsorSum == null) return;
   postData(state.value);
 }
 async function postData(data: any) {
   const axiosData = {
     sponsor: data.sponsorId,
-    sum: data.sponsorSum,
+    summa: data.sponsorSum,
     student: +route.params.id,
   };
   console.log(axiosData);

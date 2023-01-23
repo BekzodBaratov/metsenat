@@ -71,7 +71,7 @@
     </div>
     <img
       src="../assets/icon/banner-01.svg"
-      class="absolute hidden md:block transition-all ease-linear lg:block xs:hidden -bottom-48-right-96 -z-20"
+      class="absolute hidden md:block transition-all ease-linear -bottom-48 -right-96 -z-20"
       alt="banner"
     />
   </section>

@@ -104,10 +104,10 @@
                   <span class="text-[#B2B7C1]">UZS</span>
                 </td>
                 <td class="py-[23px] bg-[#FBFBFC] text-center rounded-r-[12px] px-4 border-y border-r">
-                  <!-- <button @click="selectSponsor(sponsor.sponsor.id)" class="cursor-pointer">
-                    <span class="icon-edit text-2xl text-blue-600"></span>
-                  </button> -->
-                  <div @click="() => handleModalActive(3)" class="text-blueCustom p-1 cursor-pointer text-lg">
+                  <div
+                    @click="() => handleModalActive(3, sponsors.id)"
+                    class="text-blueCustom p-1 cursor-pointer text-lg"
+                  >
                     <i class="fa-regular fa-pen-to-square"></i>
                   </div>
                 </td>
@@ -120,7 +120,7 @@
   </section>
   <EditModal v-if="currModal === 1" />
   <AddSponsorModal v-if="currModal === 2" />
-  <EditSponsorModal v-if="currModal === 3" />
+  <EditSponsorModal :currSponsorId="currSponsorId" v-if="currModal === 3" />
 </template>
 
 <script setup lang="ts">
@@ -148,10 +148,12 @@ const student: studentType | any = ref({});
 const sponsors: studentSponsorType | any = ref({});
 const studentId = ref(route.params.id);
 
+const currSponsorId = ref(0);
 const currModal = ref<number | null>(null);
-function handleModalActive(id: number) {
-  currModal.value = id;
+function handleModalActive(activeIndex: number, id: number) {
+  currModal.value = activeIndex;
   ad.admin = true;
+  currSponsorId.value = id;
 }
 
 async function fetchData() {
