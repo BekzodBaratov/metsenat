@@ -54,6 +54,9 @@ body {
   html {
     font-size: 70%;
   }
+  .container {
+    width: 95%;
+  }
 }
 @media (min-width: 640px) {
   html {

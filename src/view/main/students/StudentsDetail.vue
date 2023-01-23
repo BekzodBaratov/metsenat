@@ -119,8 +119,8 @@
     </div>
   </section>
   <EditModal v-if="currModal === 1" />
-  <EditSponsorModal v-if="currModal === 2" />
-  <AddSponsorModal v-if="currModal === 3" />
+  <AddSponsorModal v-if="currModal === 2" />
+  <EditSponsorModal v-if="currModal === 3" />
 </template>
 
 <script setup lang="ts">

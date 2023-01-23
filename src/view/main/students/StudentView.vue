@@ -9,10 +9,7 @@
         <span>Talaba qo`shish</span>
       </RouterLink>
     </div>
-    <table
-      class="table w-full table-auto border-spacing-y-4 border-separate text-sm responsive-table"
-      classes="responsive-table"
-    >
+    <table class="table w-full table-auto border-spacing-y-4 border-separate text-xs md:text-sm">
       <thead class="uppercase">
         <tr class="text-xs text-[#B1B1B8] uppercase text-center font-semibold">
           <th class="text-center text-salate-700">#</th>
@@ -31,42 +28,34 @@
         </tr>
       </thead>
       <tbody class="space">
-        <tr v-for="(item, index) in filteredList" :key="item.id" class="">
-          <td class="pl-2 py-6 text-center bg-white rounded-l-md">{{ index + 1 }}</td>
-          <td class="py-6 bg-white">{{ item.full_name }}</td>
-          <td class="py-6 bg-white text-center">{{ item.phone }}</td>
-          <td class="py-6 bg-white text-center font-medium text-slate-700 max-w-sm overflow-hidden">
-            {{ item.institute.name }}
+        <tr v-for="(item, index) in filteredList" :key="item.id">
+          <td class="pl-2 py-6 text-center bg-white rounded-l-md pr-1">{{ index + 1 }}</td>
+          <td class="py-6 bg-white max-w-[4rem]">
+            <span class="line-clamp-3">{{ item.full_name }}</span>
+          </td>
+          <td class="py-6 bg-white text-center">{{ studentTypeOnDisplay(item.type) }}</td>
+          <td class="py-6 bg-white text-center max-w-[6rem] font-medium text-slate-700 overflow-hidden">
+            <span class="line-clamp-2">
+              {{ item.institute.name }}
+            </span>
           </td>
           <td class="py-6 bg-white text-center font-medium text-slate-700">{{ numberWithSpaces(item.given) }}SUM</td>
           <td class="py-6 bg-white text-center font-medium text-slate-700">{{ numberWithSpaces(item.contract) }}SUM</td>
-
-          <td
-            :class="{
-              'text-blueCustom': item.get_status_display === 'Yangi',
-              'text-orange-500': item.get_status_display === 'Moderatsiyada',
-              'text-greenCustom': item.get_status_display === 'Tasdiqlangan',
-              'text-gray-500': item.get_status_display === 'Bekor qilingan',
-            }"
-            class="py-6 bg-white text-center"
-          >
-            {{ item.get_status_display }}
-          </td>
           <td class="py-6 bg-white flex justify-center rounded-r-md">
             <RouterLink :to="'/main/students/' + item.id">
-              <img src="../../../assets/filter/eye_1.svg" alt="view" />
+              <img class="h-8 md:h-10" src="../../../assets/filter/eye_1.svg" alt="view" />
             </RouterLink>
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="flex justify-between items-center mt-3">
+    <div class="flex justify-between items-end mt-3">
       <p>
         {{ students.count }} tadan {{ (currPage - 1) * pageSizeRes + 1 }}-{{ currPage * pageSizeRes }}
-        ko'rsatilmoqda
+        <span class="hidden md:inline">ko'rsatilmoqda</span>
       </p>
       <div class="flex gap-8 items-center">
-        <div class="select space-x-1 rounded-md p-1">
+        <div class="select space-x-1 rounded-md p-1 flex items-end gap-2">
           <span>Korsatish</span>
           <select
             v-model="pageSize"
@@ -116,7 +105,6 @@ import { useRoute } from "vue-router";
 import { admin } from "../../../store/index";
 import { Students } from "../../../types/Table";
 import { numberWithSpaces } from "../../../helpers/Numbers";
-import { formatDateTime } from "../../../helpers/DateTime";
 
 const ad = admin();
 const route = useRoute();
@@ -155,6 +143,17 @@ const filteredList = computed(() => {
     return post.full_name.toLowerCase().includes(ad.mainSearch.toLowerCase());
   });
 });
+const studentTypeOnDisplay = (val: number) => {
+  if (val == 1) {
+    return "Bakalavr";
+  } else if (val == 2) {
+    return "Magistr";
+  } else if (val == 3) {
+    return "Doktorantura";
+  } else {
+    return "Bakalavr";
+  }
+};
 
 function fetchApi(data: string = "") {
   axios

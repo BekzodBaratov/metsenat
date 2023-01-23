@@ -16,7 +16,9 @@
       <tbody class="space">
         <tr v-for="(item, index) in filteredList" :key="item.id" class="">
           <td class="pl-2 py-6 text-center bg-white rounded-l-md">{{ index + 1 }}</td>
-          <td class="py-6 bg-white">{{ item.full_name }}</td>
+          <td class="py-6 bg-white max-w-[4rem]">
+            <span class="line-clamp-2">{{ item.full_name }}</span>
+          </td>
           <td class="py-6 bg-white text-center">{{ item.phone }}</td>
           <td class="py-6 bg-white text-center font-medium text-slate-700">{{ numberWithSpaces(item.sum) }}SUM</td>
           <td class="py-6 bg-white text-center font-medium text-slate-700">{{ numberWithSpaces(item.spent) }}SUM</td>

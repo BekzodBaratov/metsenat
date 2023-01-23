@@ -1,5 +1,5 @@
 <template>
-  <section class="grid grid-cols-[11fr,9fr]">
+  <section class="grid grid-cols-1 md:grid-cols-[11fr,9fr]">
     <div class="left-section bg-white min-h-screen">
       <div v-show="!formSuccess && !formError" class="max-w-[85%] mx-auto">
         <h1 class="my-8 text-3xl md:text-5xl leading-[2] font-bold">Homiy Sifatida ariza topshirish</h1>
@@ -44,7 +44,7 @@
         </p>
       </div>
     </div>
-    <div class="right-section">
+    <div class="hidden md:block right-section">
       <div class="w-[70%] mx-auto mt-8 lg:block xs:hidden">
         <div class="relative mb-[24px]">
           <div class="absolute -z-10 -left-6 text-gray-400 -top-6">
@@ -71,7 +71,7 @@
     </div>
     <img
       src="../assets/icon/banner-01.svg"
-      class="absolute transition-all ease-linear lg:block xs:hidden -bottom-48 -right-96 -z-20"
+      class="absolute hidden md:block transition-all ease-linear lg:block xs:hidden -bottom-48-right-96 -z-20"
       alt="banner"
     />
   </section>

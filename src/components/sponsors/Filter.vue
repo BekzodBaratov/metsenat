@@ -1,27 +1,30 @@
 <template>
   <div class="filter bg-white border-t py-3">
-    <div class="container mx-auto flex justify-between items-center">
+    <div class="container mx-auto flex justify-between items-center gap-2">
       <div class="flex border border-blue-300 divide-x divide-blue-300 rounded-md">
         <RouterLink
           v-for="sel in filter.select"
           :key="sel.id"
           :to="sel.link"
           :class="route.path === sel.link ? 'active-filter' : ''"
-          class="py-2 w-40 text-center cursor-pointer"
+          class="hidden md:block py-2 w-40 text-center cursor-pointer"
         >
           {{ sel.title }}
         </RouterLink>
+        <select @change="handleSelect" v-model="selectValue" class="formSelect md:hidden">
+          <option v-for="sel in filter.select" :key="sel.id" :selected="route.path === sel.link" :value="sel.link">
+            {{ sel.title.toUpperCase() }}
+          </option>
+        </select>
       </div>
 
       <div class="flex gap-3">
         <div class="bg-gray-200 flex p-1 rounded-md px-2 gap-1">
-          <img src="../../assets/filter/search_1.svg" alt="" />
+          <img class="h-5 md:h-7" src="../../assets/filter/search_1.svg" alt="" />
           <input
             class="bg-transparent outline-none text-gray-600"
             type="search"
             v-model="filter.search"
-            name="search"
-            id="search"
             placeholder="Izlash"
           />
         </div>
@@ -44,7 +47,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { sponsorsStore } from "../../store/SponsorStore";
 import { admin } from "../../store/index";
 import FilterVue from "../modal/SponsorsFilter.vue";
@@ -53,6 +56,13 @@ import { filterSelect } from "../../types/MainFilter";
 const sponsore = sponsorsStore();
 const ad = admin();
 const route = useRoute();
+const router = useRouter();
+
+const selectValue = ref(route.path);
+
+const handleSelect = () => {
+  router.push(selectValue.value);
+};
 
 const filter = ref({
   select: [

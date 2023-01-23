@@ -2,7 +2,7 @@
   <div class="">
     <div class="py-6 bg-white">
       <div class="flex items-center justify-start container mx-auto">
-        <button class="mr-6 text-xl" @click="router.push({ path: '/main/students' })">
+        <button class="mr-3 p-3 text-xl" @click="router.push({ path: '/main/sponsors' })">
           <i class="fa-solid fa-arrow-left-long"></i>
         </button>
         <h6 class="text-2xl font-bold mr-3">{{ sponsor.full_name }}</h6>
